@@ -13,7 +13,7 @@ const animeSchema = new Schema(
     studio: { type: String },
     main_characters: [{ type: String }],
   },
-  { collection: "animes" }
+  { collection: "animes" , versionKey : false}
 );
 
 const Anime = new mongoose.model("Anime", animeSchema);

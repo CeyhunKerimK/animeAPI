@@ -72,3 +72,8 @@ exports.veriyiSil = async (req, res, next) => {
 };
 
 
+
+
+
+
+

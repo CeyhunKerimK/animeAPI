@@ -6,3 +6,4 @@ animeRouter.get("/:id", animeController.tekVeriGoster);
 animeRouter.patch("/:id",animeController.veriGuncelle );
 animeRouter.delete("/:id", animeController.veriyiSil);
 module.exports = animeRouter;
+
