@@ -1,75 +1,68 @@
-const Anime = require("../models/model");
+const Anime = require("../models/animeModel");
 const createError = require("http-errors");
-exports.tumVerileriGoster = async (req, res) => {
+exports.showAllData = async (req, res, next) => {
     try {
-        const bulunanVeriler = await Anime.find({});
-        res.json(bulunanVeriler);
-    } catch (error) {
-        res.json({
-            mesaj: error,
-        });
+        const dataFound = await Anime.find({}, {projection: { _id: 0 }});
+        if (dataFound) {
+            return res.json(dataFound);
+        }
+    } catch (e) {
+        next(e);
     }
 };
-exports.veriYolla = async (req, res) => {
+exports.sendData = async (req, res,next) => {
     try {
-        const gonderilecekVeriler = new Anime(req.body);
-        const gonderilenVeri = await gonderilecekVeriler.save();
-        if (gonderilenVeri) {
-            res.json({
-                mesaj: "gönderilme işlemi başarılı",
-                eklenen_veri: gonderilenVeri,
+        const dataToBeSend = new Anime(req.body);
+        const sendProcess = await dataToBeSend.save();
+        if (sendProcess) {
+            return res.json({
+                message: "sending successful",
             });
-        } else {
         }
-    } catch (error) {
-        res.json({
-            mesaj: error,
-        });
+    } catch (e) {
+        next(e);
+        console.log("burada hata var");
     }
 };
-exports.tekVeriGoster = async (req, res) => {
-    const geriDönenSonuc = await Anime.findById({ _id: req.params.id });
+exports.showOneData = async (req, res , next) => {
     try {
-        if (geriDönenSonuc) {
-            res.json(geriDönenSonuc);
-        } else {
-            res.json({ mesaj: `${req.params.id} id'li veri getirilemedi.` });
+        const dataShown = await Anime.findById({ _id: req.params.id });
+        if (dataShown) {
+            return res.json({
+                data_shown : dataShown
+            });
         }
-    } catch (error) {
-        res.json({ hata_mesajı: "veri getirme işleminde hata oluştu : " + error });
+    } catch (e) {
+        next(e);
     }
 };
-exports.veriGuncelle = async (req, res, next) => {
+exports.dataToUpdate = async (req, res, next) => {
     try {
-        const geriDönenSonuc = await Anime.findByIdAndUpdate(
-            { _id: req.params.id },
-            req.body,
-            { new: true }
-        );
-        if (geriDönenSonuc) {
-            return res.json({ mesaj: `${req.params.id}'li kullanıcı güncellendi.` });
-        } else {
-            res.status(404).json({ mesaj: "böyle bir kullanıcı bulunamadı." });
+        const updateData = await Anime.findByIdAndUpdate({ _id: req.params.id },req.body,);
+        if (updateData) {
+            return res.json({
+                message: `${req.params.id} data updated`
+            });
         }
-    } catch (error) {
-        next(error);
+    } catch (e) {
+        next(e);
     }
 };
-exports.veriyiSil = async (req, res, next) => {
+exports.dataToDelete = async (req, res, next) => {
     try {
-        const geriDönenSonuc = await Anime.findByIdAndDelete({
-            _id: req.params.id,
-        });
-        if (geriDönenSonuc) {
-            return res.json({ mesaj: `${req.params.id}'li kullanıcı silindi.` });
-        } else {
-
-            throw createError(404, "kullanıcı veritabanında bulunamadı.");
+        const deleteData = await Anime.findByIdAndDelete({_id: req.params.id,});
+        if (deleteData) {
+            return res.json({
+                message: `${req.params.id} data deleted`
+            });
         }
     } catch (e) {
         next(createError(400, e));
     }
 };
+
+
+
 
 
 

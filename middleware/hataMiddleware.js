@@ -1,8 +1,10 @@
-const hataYakalayici = (error, req, res, next) => {
+const express = require("express");
+
+const errorCatcher = (error, req, res , next) => {
   console.log(error);
   res.json({
-    hataKodu: error.statusCode,
-    mesaj: error.message,
+    errorCode: error.statusCode,
+    message: error.message,
   });
 };
-module.exports = hataYakalayici;
+module.exports = errorCatcher;
