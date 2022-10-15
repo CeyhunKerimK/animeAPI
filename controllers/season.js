@@ -17,13 +17,10 @@ exports.seasonSend = async (req,res,next) => {
     try{
         const sentSeason = new Season(req.body);
         const sendProcess = await sentSeason.save();
-        const animeControlMechanism = await Anime.findById({ _id : req.params.id});
-        if (animeControlMechanism) {
-            const seasonToArray = await Anime.findOneAndUpdate({$addToSet : {'seasons' : req.body}});
-        }
-        if (sendProcess) {
+        const seasonToArray = await Anime.findOneAndUpdate({ _id : req.params.id},{$addToSet : {'Seasons' : req.body}});
+        if (seasonToArray) {
             return res.json({
-                message : `post process is successful`
+                message : `Saving season data to database successful`
             })
         }
     }catch (e) {
@@ -32,9 +29,9 @@ exports.seasonSend = async (req,res,next) => {
 }
 exports.seasonDeleter = async (req,res,next) => {
     try{
-        const seasonDeleteFromArray = await Anime.findByIdAndUpdate({_id:req.params.id} , {$pull : {seasons : {seasonName : req.params.name}}});
+        const seasonDeleteFromArray = await Anime.findByIdAndUpdate({_id:req.params.id} , {$pull : {Seasons : {seasonName : req.params.name}}});
             if (seasonDeleteFromArray) {
-                const seasonDeleteFromCollection = Season.findOneAndDelete({seasonName:req.params.name});
+                const seasonDeleteFromCollection = await Season.findOneAndDelete({seasonName:req.params.name});
                 if (seasonDeleteFromCollection) {
                     res.json({
                         message: `the character named ${req.params.name} has been deleted from Season collection`

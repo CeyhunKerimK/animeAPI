@@ -41,7 +41,7 @@ exports.dataToUpdate = async (req, res, next) => {
         const updateData = await Anime.findByIdAndUpdate({ _id: req.params.id },req.body,);
         if (updateData) {
             return res.json({
-                message: `${req.params.id} data updated`
+                message: `Updated data with id ${req.params.id }`
             });
         }
     } catch (e) {
@@ -53,7 +53,7 @@ exports.dataToDelete = async (req, res, next) => {
         const deleteData = await Anime.findByIdAndDelete({_id: req.params.id,});
         if (deleteData) {
             return res.json({
-                message: `${req.params.id} data deleted`
+                message: `Data with id ${req.params.id} deleted from database`
             });
         }
     } catch (e) {

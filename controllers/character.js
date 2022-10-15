@@ -19,7 +19,7 @@ exports.postNewCharacter = async (req,res,next) => {
         const characterToPost = new Character(req.body);
         const processToPost = await characterToPost.save();
         // here I will add the control mechanism
-        const addModelArray = await Anime.findByIdAndUpdate( {_id : req.params.id} ,{$addToSet : {'characters' : characterToPost}});
+        const addModelArray = await Anime.findByIdAndUpdate( {_id : req.params.id} ,{$addToSet : {'Characters' : characterToPost}});
         if (addModelArray){
             return res.json({
                 message : "process is successful new character model add to set"
@@ -32,10 +32,9 @@ exports.postNewCharacter = async (req,res,next) => {
 exports.updateCharacter = async (req,res,next) => {
     try{
         const characterToUpdate = Character.findOneAndUpdate({_name : req.params.name},req.body);
-
-        const characterToUpdateFromArray = await Anime.findById({_id : req.params.id} , { $set : {_name : req.params.name} ,})
-        if (characterToUpdate) {
-            return req.json({
+        const characterToUpdateFromArray = await Anime.findByIdAndUpdate({_id : req.params.id},{Characters: {$elemMatch: {name : req.body.name }}} , {$set : {"Characters" : req.body}});
+        if (characterToUpdateFromArray) {
+             res.json({
                 message : "update successful",
                 new_version_character : characterToUpdate
             });
@@ -46,11 +45,11 @@ exports.updateCharacter = async (req,res,next) => {
 }
 exports.characterDeleterFromAnime = async (req,res,next) => {
     try{
-        const characterDeleterInArray = await Anime.findByIdAndUpdate({_id : req.params.id},{$pull : {characters : {name : req.params.name}}});
+        const characterDeleterInArray = await Anime.findByIdAndUpdate({_id : req.params.id},{$pull : {Characters : {name : req.params.name}}});
         if (characterDeleterInArray) {
             const characterDeleterInModel = await Character.findOneAndDelete({_name : req.params.name});
             if (characterDeleterInModel){
-                return res.json({
+                 res.json({
                     message : `the character named ${req.params.name} has been deleted from Character collection`
                 });
             }

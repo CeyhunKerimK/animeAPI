@@ -6,7 +6,6 @@ const characterSchema = new Schema({
     surname:{type:String,required:true,minLength:3,maxLength:30},
     age:{type:Number,required:true,unique:false},
     picture:[{type:String,required:true}],
-    birthdate:{type:String,required:true},
     about:{type:String,required:true},
     height:{type:Number},
     weight:{type:Number}
