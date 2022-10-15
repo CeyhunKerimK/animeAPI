@@ -2,7 +2,8 @@
 
 # <font style="color:3FEBF3">Anime API URL'S</font><br>
 
-
+```ad-info
+title: URL's
 <ul>
 
 <li>/api/anime
@@ -39,7 +40,7 @@
 
 </ul>
 
-
+```
 
 # <font style="color:3FEBF3">Anime Verisi Gönderme İşlemi</font>
 
@@ -81,7 +82,9 @@ bu url isteğini yolladığımız zaman doğru Object id girildiyse bize bu json
 bu url isteğini yolladığın zaman Object id doğru girildiyse bu json verisi döner.<br>
 
 ```json
-	"message": "Updated data with id ${req.params.id}"
+{
+"message": "Updated data with id ${req.params.id}"
+}
 ```
 
 # <font style="color:3FEBF3">Karakter Verisi Gönderme İşlemi</font>
@@ -104,7 +107,9 @@ bu url isteğini yolladığın zaman Object id doğru girildiyse bu json verisi 
 
 bu json verisini veritabanına yolladığın zaman alacağın json tipindeki mesaj :
 ```json
-	"message" : "process is successful new character model add to set"
+{
+"message" : "process is successful new character model add to set"
+}
 ```
 
 #### <font style="color:52F7AC">Karakter objesini veritabanı ve Anime'nin <font style="color:F1A94E">Characters</font> Dizisinden Silinmesi</font>
@@ -112,7 +117,9 @@ bu json verisini veritabanına yolladığın zaman alacağın json tipindeki mes
 	http://localhost:8000/api/characters/:id/delete-character/:name
 parametreler doğru girilirse geri dönen json mesajı :
 ```json
-	"message" : "the character named ${req.params.name} has been deleted from Character collection"
+{
+"message" : "the character named ${req.params.name} has been deleted from Character collection"
+}
 ```
 
 # <font style="color:3FEBF3">Sezon verisini gönderme işlemi</font>
@@ -130,13 +137,17 @@ parametreler doğru girilirse geri dönen json mesajı :
 ```
 parametreler doğru girildiyse geriye döndürülecek json mesajı :
 ```json
-	"message" : "Saving season data to database successful"
+{
+"message" : "Saving season data to database successful"
+}
 ```
 #### <font style="color:52F7AC">Sezon objesinin veritabanından ve <font style="color:F1A94E">Seasons</font> Dizisinden Silinmesi</font>
 	http://localhost:8000/api/season/:id/delete-season/:name
 parametreler doğru girildiyse geriye döndürülecek json mesajı :
 ```json
-	"message" : "the character named ${req.params.name} has been deleted from Season collection"
+{
+"message" : "the character named ${req.params.name} has been deleted from Season collection"
+}
 ```
 
 
